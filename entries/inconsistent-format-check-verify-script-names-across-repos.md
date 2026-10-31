@@ -1,6 +1,6 @@
 ---
-title: Inconsistent check, verify, and format script names across repos
-tags: [npm, scripts, verify, check, format, agents]
+title: Inconsistent format, check, and verify script names across repos
+tags: [javascript, typescript, node.js, npm, scripts, format, check, verify, agents]
 agents: [all]
 symptoms:
   - One repo uses check as the finish gate and another uses verify
@@ -11,7 +11,7 @@ symptoms:
 updated: 2026-10-31
 ---
 
-# Inconsistent check, verify, and format script names across repos
+# Inconsistent format, check, and verify script names across repos
 
 ## Problem
 
@@ -19,7 +19,9 @@ Across several personal repositories, the same finish workflow — format, lint,
 
 ## Context
 
-Applies to multi-repo setups that share a similar TypeScript / oxlint / oxfmt (or equivalent) toolchain, plus non-npm projects that map the same ideas onto a Makefile or other task runner. The lesson is the shared contract for script names and agent finish steps. Per-repo details (workspace filters, extra validators, how `verify` is implemented) stay in that repo’s `package.json`, `docs/commands.md`, or `docs/change-code-steps.md`.
+**Ecosystem:** JavaScript / TypeScript / Node.js projects that expose the gate through npm (or compatible) scripts in `package.json`. The names and read-only rules in this entry are for that ecosystem; they are not a general task-runner contract for unrelated stacks.
+
+Applies to multi-repo setups that share a similar TypeScript / oxlint / oxfmt (or equivalent) toolchain. The lesson is the shared contract for script names and agent finish steps. Per-repo details (workspace filters, extra validators, how `verify` is implemented) stay in that repo’s `package.json`, `docs/commands.md`, or `docs/change-code-steps.md`.
 
 ## Why
 
@@ -40,7 +42,7 @@ A small, stable vocabulary so every repo answers the same questions the same way
 
 ## What worked
 
-Use this contract in every repo that has format / lint / type-check / test tooling.
+Use this contract in every JavaScript / TypeScript / Node.js repo that has format / lint / type-check / test tooling exposed as npm scripts.
 
 ### Script names
 
@@ -70,7 +72,7 @@ Project-specific validators (config schema checks, doc link checks, and so on) m
 
 When finishing a code change in a host project:
 
-1. Discover scripts from `package.json` / Makefile, `AGENTS.md`, and `docs/commands.md` or `docs/change-code-steps.md`.
+1. Discover scripts from `package.json`, `AGENTS.md`, and `docs/commands.md` or `docs/change-code-steps.md`.
 2. While iterating: use focused tests; use `npm run check` (or the atomic static trio) when a static pass is enough.
 3. Before calling the change done: if the tree needs formatting, run `npm run format`. Then run `npm run verify`.
 4. If there is no `verify`, compose the read-only chain: `format:check` → `lint` → `type-check` → `test` (plus e2e / build only when this repo’s docs or the change scope require them).
@@ -85,8 +87,6 @@ Success output for the finish command should stay easy to scan (for example a si
 3. Make `check` the read-only static aggregate; make `verify` the read-only finish aggregate (static + unit tests).
 4. Remove auto-format from inside `verify` / `check`. Keep write behavior on `format` or an explicitly named `fix`.
 5. Point `AGENTS.md` and change-code steps at `format` (when needed) then `verify`, and link this entry or restate the same table in `docs/commands.md`.
-
-Non-JS task runners map the same words: for example a Makefile target `format` / `check` / `verify` with the same write vs read-only rules.
 
 ## What did not work
 
