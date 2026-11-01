@@ -46,3 +46,7 @@ Writing rules for these files are in [entry-conventions.md](entry-conventions.md
 - A problem, diagnosis, or script explanation goes in `entries/`.
 - A description of repository structure or writing rules goes in `docs/`.
 - Do not add application code, dependency files, or build configuration.
+
+## Who each directory is for
+
+`docs/` (with `AGENTS.md` and `README.md`) is for agents and people searching or editing **this** repository. `entries/` are lessons for agents working in **other** projects. An entry's body and references must make sense to that outside reader: do not link back to this repository's writing conventions or other authoring-only docs under `docs/`.

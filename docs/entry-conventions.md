@@ -121,7 +121,7 @@ Record false leads that waste time later. One short bullet or paragraph each is 
 
 ### References
 
-Link upstream docs, issues, or changelogs that support the conclusion.
+Link upstream docs, issues, changelogs, or related entries that support the conclusion for a reader in another project. Do not link this repository's authoring docs under `docs/` (for example `entry-conventions.md` or `file-structure.md`); those exist only to search and edit this knowledge base.
 
 ## Full template
 
