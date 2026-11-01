@@ -83,5 +83,4 @@ A practical default for agent-friendly repos is: a short always-on rule set, a t
 
 ## References
 
-- Repository writing rules for this knowledge base: [docs/entry-conventions.md](../docs/entry-conventions.md)
 - Related lesson on avoiding a second source of truth for procedures: [large-task-fills-context-and-weakens-output.md](large-task-fills-context-and-weakens-output.md)
