@@ -8,6 +8,7 @@ symptoms:
   - Local MySQL or another required service is down (ECONNREFUSED, connection refused); agent keeps inventing bypasses
   - User is never asked to renew the credential or start the service
 updated: 2026-11-02
+# note: body cross-link added same day; updated date unchanged
 ---
 
 # Agent retries around expired auth or a down service instead of stopping
@@ -46,6 +47,8 @@ The decision is by **failure class**, not by “are there more tools left?”
 A project-local rule that only lists “stop on ECONNREFUSED” or “stop on 401” helps for those strings. It does not replace the class test: the same strings can appear once as noise; after the class is confirmed across attempts, further tool-hopping is the bug.
 
 Related: connection failures also appear under Vitest and `mysql2`, where a secondary print error can hide `ECONNREFUSED`. See [vitest-mysql2-error-stack-triggers-charcodeat-and-hides-sqlmessage.md](./vitest-mysql2-error-stack-triggers-charcodeat-and-hides-sqlmessage.md). That entry is about recovering the real SQL or connection error; this entry is about stopping once that real error is known to be an unrestorable precondition.
+
+Also related: when the failure is a contract or type mismatch, agents often paper it over with defensive compatibility instead of keeping the throw. See [agent-adds-defensive-compat-to-silence-contract-errors.md](./agent-adds-defensive-compat-to-silence-contract-errors.md).
 
 ## What worked
 
