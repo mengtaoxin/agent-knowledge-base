@@ -14,6 +14,13 @@ Store:
 - Why that fix is the one that matches the cause, including why the obvious alternatives do not
 - A short explanation of a script or command, kept as documentation
 
+Recommended. Write these in as much detail as the author can give. An entry is complete without them:
+
+- A real case
+- The author's own judgment, including a personal or subjective one
+- The path of thought, and the rule as it was revised
+- The thoughts, mood, and feeling at the time of writing
+
 Do not store:
 
 - Application source code meant to be run from this repository
@@ -80,7 +87,7 @@ updated: 2026-10-25
 Use these headings in this order:
 
 1. `# Short English title` — same idea as `title` in frontmatter
-2. `## Problem` — what failed, in one or two paragraphs
+2. `## Problem` — what failed. A real episode is recommended when one is known
 3. `## Context` — tools, libraries, versions, and where it showed up
 4. `## Why` — the mechanism, the benefit of the fix, and why this approach was chosen
 5. `## What worked` — the fix or conclusion, with the smallest reusable illustration
@@ -89,11 +96,11 @@ Use these headings in this order:
 
 ### Problem
 
-State the failure clearly. Prefer the user's symptoms over abstract theory.
+State the failure clearly. Prefer the user's symptoms over abstract theory. When a real episode is known, include it, at the length the case takes. The entry still stands without that episode.
 
 ### Context
 
-Name the environment that matters: framework, library versions, runtime, and the surrounding workflow. Skip details that do not change the diagnosis.
+Name the environment that matters: framework, library versions, runtime, and the surrounding workflow. When the situation around the case is known, include it, so a later reader can picture where the judgment was made. That situation is recommended detail, and the entry still stands without it.
 
 ### Why
 
@@ -109,7 +116,7 @@ Write three things:
 
 Do not turn `## Why` into a second procedure. Do not paste steps from a skill or a doc. Link that source and explain the properties that make it the right one.
 
-A few short paragraphs is enough when the mechanism is simple. Go deeper when a later maintainer could reasonably pick a different method and miss the cause. Skip details that do not change the choice.
+Write the mechanism, the benefit, and the choice at the depth a later maintainer needs. Those three carry the lesson. The path of the decision, each version the rule passed through, and the author's judgment and state of mind are recommended on top of them, as described in [Length and the author's account](#length-and-the-authors-account).
 
 ### What worked
 
@@ -117,11 +124,28 @@ Put the transferable answer here. Keep code or command examples minimal. A fence
 
 ### What did not work
 
-Record false leads that waste time later. One short bullet or paragraph each is enough.
+Record false leads that waste time later. Tell each one as it happened: what it looked like, why it was tried, and how it failed. A bullet is enough for a small lead. A longer account is appropriate when the attempt was part of how the rule changed.
 
 ### References
 
 Link upstream docs, issues, changelogs, or related entries that support the conclusion for a reader in another project. Do not link this repository's authoring docs under `docs/` (for example `entry-conventions.md` or `file-structure.md`); those exist only to search and edit this knowledge base.
+
+## Length and the author's account
+
+The items below are recommended. More detail is better. An entry that already states the problem, the cause, and the fix is complete without them, and a missing item does not block saving.
+
+When the author has any of this, write it in, and write it as fully as they gave it:
+
+- A real case: what was happening, what was tried, and what changed
+- The author's own judgment, including a personal or subjective one
+- The path of thought, and the rule as it was revised: the earlier wording, what felt wrong about it, and what the next version kept
+- The thoughts, the mood, and the feeling at the time of writing, in the most honest statement of that state the author can give
+
+That material may be written as a story. When the path needs the room, write it at the length of a novella. A later reader can then follow what the author was thinking and feeling while the entry was written, and meet that state as it actually was.
+
+Keep the required sections. When this material is present, put the case in `## Problem` and `## Context`. Put the path, the revisions, the judgment, and the feeling in `## Why`. Put attempts that were actually tried in `## What did not work`. Leave `## What worked` as the action a later agent can apply.
+
+Keep what the author says. Do not invent a case, a judgment, a revision, or a state of mind to fill a gap. Leave the entry as it is when the author has not given that part.
 
 ## Full template
 
@@ -139,15 +163,15 @@ updated: YYYY-MM-DD
 
 ## Problem
 
-What failed, in one or two paragraphs.
+What failed. A real episode is welcome when one is known.
 
 ## Context
 
-Tools, libraries, versions, and where it showed up.
+Tools, libraries, versions, and where it showed up. The situation around the case is welcome when it is known.
 
 ## Why
 
-Why the failure happens, what the fix preserves, and why this approach matches the cause better than the alternatives.
+Why the failure happens, what the fix preserves, and why this approach matches the cause. Recommended in addition, when the author has given them: the path of the decision, the versions the rule passed through, and the author's judgment, thoughts, and feelings at the time of writing.
 
 ## What worked
 
@@ -155,7 +179,7 @@ The fix or the conclusion, with the smallest illustration that makes it reusable
 
 ## What did not work
 
-Attempts that looked right and still failed. Omit this section if there were none.
+Attempts that looked right and still failed, told as they happened. Omit this section if there were none.
 
 ## References
 
@@ -189,6 +213,7 @@ If the meaning still cannot be made definite, do not add or edit the entry. Tell
 - [ ] `agents` is `[all]` or a list of specific agent product slugs, not both
 - [ ] Body uses the required section order, including `## Why`
 - [ ] `## Why` names the mechanism, the benefit of the fix, and why this approach was chosen
+- [ ] Recommended detail the author supplied (a case, a judgment, a revision, thoughts, mood, or feeling) is kept; its absence is acceptable, and none of it was invented
 - [ ] Symptoms are exact enough for another agent to match
 - [ ] Every load-bearing fact was confirmed with the user; nothing was filled in by default or by guesswork
 - [ ] Code blocks are documentation only
