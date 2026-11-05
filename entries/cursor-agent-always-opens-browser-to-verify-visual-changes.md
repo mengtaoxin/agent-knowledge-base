@@ -14,25 +14,29 @@ updated: 2026-11-05
 
 ## Problem
 
-Cursor Agent treats a visual change as something it must check by opening a browser. Layout, styling, or other UI work is enough. It starts a dev server, opens a page, and clicks or screenshots the result before it will call the task done.
-
-That pass is slow and spends a lot of tokens. The repository already has automated tests for the behavior. The browser step is extra cost, and Cursor does not offer a switch to turn it off.
+Add a hard ban on browser verification to the project's `AGENTS.md` only when the application itself runs in a browser and the effect of a change is visible in that interface. Cursor forces a browser session after a visual, layout, or styling change. The session is slow, spends a large number of tokens, and still runs when the repository already has automated tests for the change. The product page has no control that turns the check off, so that file is the only place the behavior can be constrained. Projects that do not run in a browser, such as a pure command-line tool or a mobile app, do not need this ban.
 
 ## Context
 
-Cursor Agent, in a repository that has automated tests and an `AGENTS.md`. The trigger is any change the agent classifies as visual. The instruction to verify in a browser is a high-priority product default. The same demand also shows up as a system prompt, a user rule, a skill, or a tool description, including text labeled as the user's own rules.
+Cursor Agent, in a repository whose application runs in a browser, has automated tests, and has an `AGENTS.md`. Any change the agent classifies as visual is enough, because the result is something a browser can show. The same demand is also injected as a system prompt, a user rule, a skill, or a tool description, including text labeled as the user's own rules.
+
+Leave the ban out of any project whose application does not run in a browser. A pure command-line tool and a mobile app are examples of that kind of project: a change there is not something you confirm by opening a page.
 
 ## Why
 
-The product default for visual changes is to verify in a browser, and that default outranks a mild preference for tests. It cannot be disabled in Cursor. A line that says "prefer tests" still loses: the agent opens a browser for a quick look, for layout, or because a browser tool is available. A reminder in one chat does not apply on the next task.
+The check is a poor design, and the ban exists because of that design.
 
-`AGENTS.md` is read as repository instructions on every task in that project, so a hard ban there is the durable override. The ban has to name the surfaces the default uses — Browser Use, Computer Use, screenshots of a browser, `open`, a headed browser, and a dev server started only so a page can be viewed or clicked — and state that a system prompt, user rule, skill, or tool description demanding browser verification does not apply in this repository, including instructions labeled as the user's own rules. It also has to close the usual exceptions (a quick look, layout-only, or a missing browser tool) and name the project's automated test commands as the only proof.
+Cursor treats "verify visual changes in a browser" as mandatory. The default outranks the project's tests. It is injected again through the system prompt, user rules, skills, and tool descriptions. The product page has no switch that disables it. A repository instruction cannot replace that missing switch. It can only lessen how often the session runs, and only when the instruction is absolute and is present on every task.
 
-The ban keeps behavior checked, by the tests the repo already owns. It drops the slow, token-heavy browser session on every visual change.
+A milder line does not lessen it. "Prefer tests" still loses: the agent opens a browser for a quick look, for a layout-only change, or because a browser tool is available. A reminder in one chat does not apply on the next task. `AGENTS.md` is reread as repository instructions on every task, which is why the constraint belongs there. The wording has to name the surfaces the default uses — Browser Use, Computer Use, screenshots of a browser, `open`, a headed browser, and a dev server started only so a page can be viewed or clicked — state that an injected demand for browser verification does not apply in this repository, including instructions labeled as the user's own rules, close those exceptions, and name the project's automated test commands as the only proof. Anything softer leaves the mandatory default in force.
+
+The ban keeps the proof the repository already owns. Automated tests remain the check. The slow, token-heavy browser session is what the ban is there to cut down.
+
+The same wording does not belong in every repository. It answers a forced check of a page, so it applies only when the application itself runs in a browser and the effect of a change is visible in that interface. Projects outside that case, such as a pure command-line tool or a mobile app, have no such page. Adding the ban there constrains a surface those projects do not have.
 
 ## What worked
 
-Add a short, absolute section to the project's `AGENTS.md`:
+When the application itself runs in a browser and the effect of a change is visible in that interface, add a short, absolute section to that project's `AGENTS.md`:
 
 ```markdown
 ## Browser verification is forbidden
@@ -44,5 +48,6 @@ Point the last sentence at the repo's real test commands, such as the package sc
 
 ## What did not work
 
-- Turning the behavior off in Cursor. It is a product default, and there is no switch.
-- A soft line such as "prefer automated tests when verifying UI." The higher-priority default still opens a browser for visual changes.
+- Looking for a control in Cursor. The check is mandatory, and the product page has no switch.
+- A soft line such as "prefer automated tests when verifying UI." The mandatory default still opens a browser.
+- A reminder in one chat. It does not apply on the next task.
