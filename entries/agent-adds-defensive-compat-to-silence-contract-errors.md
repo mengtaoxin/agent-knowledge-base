@@ -22,7 +22,7 @@ That habit is wrong when the throw was the useful signal. Not every failure mean
 
 General coding-agent behavior across languages. The motivating illustration is a Java-style API that takes `Object`, documents that only the number `1` runs a special path, and throws for every other value — including the string `"1"`. The same pattern appears whenever an agent meets a type, enum, status, or precondition mismatch and reaches for coercion instead of preserving the contract.
 
-Related but separate: when the failure is an unrestorable external precondition (expired auth, service down), agents also tend to keep retrying. See [agent-retries-around-expired-auth-or-down-service.md](./agent-retries-around-expired-auth-or-down-service.md). That entry is about stopping tool-hopping; this entry is about refusing to paper over contract and environment errors with defensive code.
+Related but separate: when the failure is an unrestorable external precondition (expired auth, service down, unreachable environment), agents also tend to keep retrying. See [agent-retries-around-expired-auth-or-down-service.md](./agent-retries-around-expired-auth-or-down-service.md). That entry is about stopping tool-hopping; this entry is about refusing to paper over contract and environment errors with defensive code.
 
 ## Why
 
@@ -93,4 +93,4 @@ void handle(Object input) {
 
 ## References
 
-- Related entry on stopping when auth expires or a required service is down: [agent-retries-around-expired-auth-or-down-service.md](./agent-retries-around-expired-auth-or-down-service.md)
+- Related entry on stopping when auth expires, a required service is down, or a host is unreachable in the current environment: [agent-retries-around-expired-auth-or-down-service.md](./agent-retries-around-expired-auth-or-down-service.md)
